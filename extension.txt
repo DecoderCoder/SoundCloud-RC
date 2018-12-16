@@ -1,0 +1,107 @@
+// ==UserScript==
+// @name         SoundCloud Remote Controller
+// @namespace    http://tampermonkey.net/
+// @version      0.1
+// @description
+// @author       Decode
+// @match        https://soundcloud.com/*
+// @grant        none
+// @require http://code.jquery.com/jquery-3.3.1.min.js
+// ==/UserScript==
+
+(function () {
+    'use strict';
+
+    var socket = new WebSocket('ws://127.0.0.1:15769/soundcloud/desktop');
+    setupSocket(socket);
+    $("<div id=\"desktop\" style=\"text-align: center; top: 0; z-index: 99999; display: inline-block; position: fixed; right: 15px; height: 40px; line-height: 40px; color: red; text-align: center; font-weight: bold;\"><span id=\"desktoponline\" style=\"top: 50%; transform: translateY(-50%);\">Offline</span></div>").appendTo('body');
+
+    function getCookie(name) {
+        var matches = document.cookie.match(new RegExp(
+            "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+        ));
+        return matches ? decodeURIComponent(matches[1]) : undefined;
+    }
+
+    function setCookie(name, value, options) {
+        options = options || {};
+
+        var expires = options.expires;
+
+        if (typeof expires == "number" && expires) {
+            var d = new Date();
+            d.setTime(d.getTime() + expires * 1000);
+            expires = options.expires = d;
+        }
+        if (expires && expires.toUTCString) {
+            options.expires = expires.toUTCString();
+        }
+
+        value = encodeURIComponent(value);
+
+        var updatedCookie = name + "=" + value;
+
+        for (var propName in options) {
+            updatedCookie += "; " + propName;
+            var propValue = options[propName];
+            if (propValue !== true) {
+                updatedCookie += "=" + propValue;
+            }
+        }
+
+        document.cookie = updatedCookie;
+    }
+
+    var id = getCookie('soundcloudcontroller');
+
+    function setupSocket(s){
+        s.onopen = function() {
+            console.log('Connected');
+            $('#desktoponline').css('color', 'green');
+            $('#desktoponline').html('Online');
+        };
+
+        s.onclose = function() {
+            console.log('Disconnected');
+            $('#desktoponline').css('color', 'red');
+            $('#desktoponline').html('Offline');
+            setTimeout(function () {
+                socket = new WebSocket('ws://127.0.0.1:15769/soundcloud/desktop');
+                setupSocket(socket);
+            }, 1000);
+        };
+
+        s.onmessage = function (message) {
+            var text = message.data;
+            if (text === 'state') {
+                socket.send('playing:' + ($('.playing').length > 0));
+                socket.send('curtime:' + $('.playbackTimeline__timePassed span').get(1).innerHTML);
+                socket.send('wholetime:' + $('.playbackTimeline__duration span').get(1).innerHTML);
+                socket.send('valuemax:' + $('.playbackTimeline__progressWrapper').attr('aria-valuemax'));
+                socket.send('valuenow:' + $('.playbackTimeline__progressWrapper').attr('aria-valuenow'));
+                socket.send('songtitle:' + $('.playbackSoundBadge__lightLink').attr('title'));
+                socket.send('songname:' + $('.playbackSoundBadge__title a').attr('title'));
+                socket.send('picture:' + $('.listenArtworkWrapper__artwork div span').css('background-image'));
+
+            }
+            if (text.startsWith('time')) {
+                $('.playbackTimeline__progressWrapper').attr('aria-valuenow', text.split('1')[1]);
+            }
+            if (text.startsWith('left')) {
+                $('.playControls__prev').click();
+            }
+            if (text.startsWith('play')) {
+                $('.playControls__play').click();
+            }
+            if (text.startsWith('pause')) {
+                $('.playControls__play').click();
+            }
+            if (text.startsWith('right')) {
+                $('.playControls__next').click();
+            }
+        };
+    }
+
+
+})
+();
