@@ -1,0 +1,10 @@
+c:\users\decode\documents\visual studio 2013\Projects\SoundCloudRemoteSite\SoundCloudRemoteSite\bin\Debug\SoundCloudRemoteSite.exe
+c:\users\decode\documents\visual studio 2013\Projects\SoundCloudRemoteSite\SoundCloudRemoteSite\bin\Debug\SoundCloudRemoteSite.pdb
+c:\users\decode\documents\visual studio 2013\Projects\SoundCloudRemoteSite\SoundCloudRemoteSite\obj\Debug\SoundCloudRemoteSite.csprojResolveAssemblyReference.cache
+c:\users\decode\documents\visual studio 2013\Projects\SoundCloudRemoteSite\SoundCloudRemoteSite\obj\Debug\SoundCloudRemoteSite.Properties.Resources.resources
+c:\users\decode\documents\visual studio 2013\Projects\SoundCloudRemoteSite\SoundCloudRemoteSite\obj\Debug\SoundCloudRemoteSite.csproj.GenerateResource.Cache
+c:\users\decode\documents\visual studio 2013\Projects\SoundCloudRemoteSite\SoundCloudRemoteSite\obj\Debug\SoundCloudRemoteSite.exe
+c:\users\decode\documents\visual studio 2013\Projects\SoundCloudRemoteSite\SoundCloudRemoteSite\obj\Debug\SoundCloudRemoteSite.pdb
+c:\users\decode\documents\visual studio 2013\Projects\SoundCloudRemoteSite\SoundCloudRemoteSite\bin\Debug\SoundCloudRemoteSite.exe.config
+c:\users\decode\documents\visual studio 2013\Projects\SoundCloudRemoteSite\SoundCloudRemoteSite\bin\Debug\websocket-sharp.dll
+c:\users\decode\documents\visual studio 2013\Projects\SoundCloudRemoteSite\SoundCloudRemoteSite\bin\Debug\websocket-sharp.xml
