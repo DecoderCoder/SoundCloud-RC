@@ -1,3 +1,5 @@
+# Extension
+You need install Tampermonkey and install "extension.txt" as new extension
 # Desktop
 You should open port 80 in Windows Firewall.
 # Mobile
